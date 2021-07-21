@@ -52,17 +52,21 @@ const createHeader = (param) => {
     };
 
     if (param.header.menu) {
-        const menu = getElement('nav', ['menu-link']);
+        const menu = getElement('nav', ['menu-list']);
         const allMenuLink = param.header.menu.map(item => {
-            const menuLink = getElement('a', ['menu-link']);
-            console.log(menuLink)
-            menuLink.innerHTML = item.title;
-            menuLink.href = item.link
+            const menuLink = getElement('a', ['menu-link'], {
+                href: item.link,
+                textContent: item.title
+            });
+
+            // menuLink.innerHTML = item.title;
+            // menuLink.href = item.link
             return menuLink;
         });
         console.log(allMenuLink)
+        menu.append(...allMenuLink)
         wrapper.append(menu)
-        wrapper.append(...allMenuLink)
+
     };
 
     if (param.header.social) {
