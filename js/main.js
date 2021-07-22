@@ -38,36 +38,39 @@ const getElement = (tagName, classNames, attributes) => {
     return element;
 };
 
-const createHeader = (param) => {
+const createHeader = ({ title, header: { logo, menu, social } }) => {
+
+
+
     const header = getElement('header');
     const container = getElement('div', ['container']);
     const wrapper = getElement('div', ["header"]);
 
-    if (param.header.logo) {
-        const logo = getElement("img", ['logo'], {
-            src: param.header.logo,
-            alt: 'Логотип ' + param.title
+    if (logo) {
+        const logoSpan = getElement("img", ['logo'], {
+            src: logo,
+            alt: 'Логотип ' + title
         });
-        wrapper.append(logo);
+        wrapper.append(logoSpan);
     };
 
-    if (param.header.menu) {
-        const menu = getElement('nav', ['menu-list']);
-        const allMenuLink = param.header.menu.map(item => {
+    if (menu) {
+        const menuBlock = getElement('nav', ['menu-list']);
+        const allMenuLink = menu.map(item => {
             const menuLink = getElement('a', ['menu-link'], {
                 href: item.link,
                 textContent: item.title
             });
             return menuLink;
         });
-        menu.append(...allMenuLink)
-        wrapper.append(menu)
+        menuBlock.append(...allMenuLink)
+        wrapper.append(menuBlock)
 
     };
 
-    if (param.header.social) {
+    if (social) {
         const socialWrapper = getElement('div', ['social']);
-        const allSocial = param.header.social.map(item => {
+        const allSocial = social.map(item => {
 
             const socialLink = getElement('a', ['social-link']);
             socialLink.append(getElement('img', [], {
@@ -164,6 +167,13 @@ const createMain = ({ title, main: { genre, rating, description, trailer } }) =>
 
 const movieConstructor = (selector, options) => {
     document.title = options.title;
+
+    const iconTitle = document.createElement('link');
+    iconTitle.rel = 'icon'
+    iconTitle.href = options.header.logo
+    document.getElementsByTagName('head')[0].appendChild(iconTitle)
+
+
     const app = document.querySelector(selector);
     app.classList.add('body-app');
     app.style.backgroundImage = options.background ?
@@ -217,7 +227,7 @@ movieConstructor(".app", {
     },
     main: {
         genre: '2019,фэнтези',
-        rating: '0',
+        rating: '8',
         description: 'Ведьмак Геральт, мутант и убийца чудовищ, на своей верной лошади по кличке Плотва путешествует по Континенту. За тугой мешочек чеканных монет этот мужчина избавит вас от всякой настырной нечисти — хоть от чудищ болотных, оборотней и даже заколдованных принцесс.',
         trailer: 'https://www.youtube.com/watch?v=P0oJqfLzZzQ',
     }
