@@ -168,10 +168,17 @@ const createMain = ({ title, main: { genre, rating, description, trailer } }) =>
 const movieConstructor = (selector, options) => {
     document.title = options.title;
 
-    const iconTitle = document.createElement('link');
-    iconTitle.rel = 'icon'
-    iconTitle.href = options.header.logo
-    document.getElementsByTagName('head')[0].appendChild(iconTitle)
+    if (options.favicon) {
+        const index = options.favicon.lastIndexOf('.')
+        const type = options.favicon.substring(index + 1)
+
+
+        const favicon = getElement('linc', null, {
+            rel: 'icon',
+            href: options.favicon,
+            type: 'image/' + type === 'svg' ? 'svg-xml' : type
+        })
+    }
 
 
     const app = document.querySelector(selector);
@@ -191,38 +198,39 @@ const movieConstructor = (selector, options) => {
 
 movieConstructor(".app", {
     title: 'Ведьмак',
+    favicon: 'witcher/background.jpg',
     background: 'witcher/background.jpg',
     header: {
         logo: 'witcher/logo.png',
         social: [{
-                title: 'Twitter',
-                link: 'https://twitter.com',
-                image: 'witcher/social/twitter.svg',
-            },
-            {
-                title: 'Instagram',
-                link: 'https://instagram.com',
-                image: 'witcher/social/instagram.svg',
-            },
-            {
-                title: 'Facebook',
-                link: 'https://facebook.com',
-                image: 'witcher/social/facebook.svg',
-            },
+            title: 'Twitter',
+            link: 'https://twitter.com',
+            image: 'witcher/social/twitter.svg',
+        },
+        {
+            title: 'Instagram',
+            link: 'https://instagram.com',
+            image: 'witcher/social/instagram.svg',
+        },
+        {
+            title: 'Facebook',
+            link: 'https://facebook.com',
+            image: 'witcher/social/facebook.svg',
+        },
 
         ],
         menu: [{
-                title: 'Описание',
-                link: '#',
-            },
-            {
-                title: 'Трейлер',
-                link: '#',
-            },
-            {
-                title: 'Отзывы',
-                link: '#',
-            },
+            title: 'Описание',
+            link: '#',
+        },
+        {
+            title: 'Трейлер',
+            link: '#',
+        },
+        {
+            title: 'Отзывы',
+            link: '#',
+        },
         ],
     },
     main: {
