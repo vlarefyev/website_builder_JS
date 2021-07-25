@@ -172,12 +172,13 @@ const movieConstructor = (selector, options) => {
         const index = options.favicon.lastIndexOf('.')
         const type = options.favicon.substring(index + 1)
 
-
-        const favicon = getElement('linc', null, {
+        const favicon = getElement('link', null, {
             rel: 'icon',
             href: options.favicon,
             type: 'image/' + type === 'svg' ? 'svg-xml' : type
         })
+
+        document.head.append(favicon)
     }
 
 
@@ -198,7 +199,7 @@ const movieConstructor = (selector, options) => {
 
 movieConstructor(".app", {
     title: 'Ведьмак',
-    favicon: 'witcher/background.jpg',
+    favicon: 'witcher/logo.png',
     background: 'witcher/background.jpg',
     header: {
         logo: 'witcher/logo.png',
