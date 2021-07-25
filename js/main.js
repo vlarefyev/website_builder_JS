@@ -66,6 +66,14 @@ const createHeader = ({ title, header: { logo, menu, social } }) => {
         menuBlock.append(...allMenuLink)
         wrapper.append(menuBlock)
 
+        const menuBtn = getElement('button', ['menu-button'])
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('menu-button-active')
+            wrapper.classList.toggle('header-active')
+        });
+
+        container.append(menuBtn)
+
     };
 
     if (social) {
@@ -84,7 +92,7 @@ const createHeader = ({ title, header: { logo, menu, social } }) => {
         });
         socialWrapper.append(...allSocial);
         wrapper.append(socialWrapper);
-    };
+    }
 
     header.append(container);
     container.append(wrapper);
@@ -175,7 +183,7 @@ const movieConstructor = (selector, options) => {
         const favicon = getElement('link', null, {
             rel: 'icon',
             href: options.favicon,
-            type: 'image/' + type === 'svg' ? 'svg-xml' : type
+            type: 'image/' + (type === 'svg' ? 'svg-xml' : type)
         })
 
         document.head.append(favicon)
