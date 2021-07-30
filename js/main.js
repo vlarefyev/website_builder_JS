@@ -22,7 +22,7 @@ const createHeader = ({ title, header: { logo, menu, social } }) => {
 
     const header = getElement('header');
     const container = getElement('div', ['container']);
-    const wrapper = getElement('div', ["header"]);
+    const wrapper = getElement('div', ['header']);
 
     if (logo) {
         const logoSpan = getElement("img", ['logo'], {
@@ -42,17 +42,16 @@ const createHeader = ({ title, header: { logo, menu, social } }) => {
             return menuLink;
         });
         menuBlock.append(...allMenuLink)
-        wrapper.append(menuBlock)
+        wrapper.append(menuBlock);
 
-        const menuBtn = getElement('button', ['menu-button'])
+        const menuBtn = getElement('button', ['menu-button']);
         menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('menu-button-active')
-            wrapper.classList.toggle('header-active')
+            menuBtn.classList.toggle("menu-button-active");
+            wrapper.classList.toggle('header-active');
         });
 
         container.append(menuBtn)
-
-    };
+    }
 
     if (social) {
         const socialWrapper = getElement('div', ['social']);
@@ -72,8 +71,9 @@ const createHeader = ({ title, header: { logo, menu, social } }) => {
         wrapper.append(socialWrapper);
     }
 
-    header.append(container);
     container.append(wrapper);
+    header.append(container);
+    
 
     return header;
 };
@@ -200,13 +200,6 @@ const createMain = ({ title, main: { genre, rating, description, trailer, slider
                 }
             }
         });
-
-        const menuButton = document.querySelector('.menu-button');
-        const menu = document.querySelector('.header');
-        menuButton.addEventListener('click', function () {
-            menuButton.classList.toggle('menu-button-active');
-            menu.classList.toggle('header-active');
-        })
     }
 
 
@@ -215,7 +208,16 @@ const createMain = ({ title, main: { genre, rating, description, trailer, slider
 };
 
 const movieConstructor = (selector, options) => {
+    const app = document.querySelector(selector)
     document.title = options.title;
+    app.classList.add('body-app')
+
+    app.style.color = options.fontColor || '';
+    app.style.backgroundColor = options.backgroundColor || '';
+
+    if(options.subColor) {
+        document.documentElement.style.setProperty('--sub-color', options.subColor)
+    }
 
     if (options.favicon) {
         const index = options.favicon.lastIndexOf('.')
@@ -231,7 +233,7 @@ const movieConstructor = (selector, options) => {
     }
 
 
-    const app = document.querySelector(selector);
+;
     app.classList.add('body-app');
     app.style.backgroundImage = options.background ?
         `url("${options.background}")` : "";
@@ -250,6 +252,9 @@ movieConstructor(".app", {
     title: 'Ведьмак',
     favicon: 'witcher/logo.png',
     background: 'witcher/background.jpg',
+    fontColor: '',
+    backgroundColor: '',
+    subColor: '',
     header: {
         logo: 'witcher/logo.png',
         social: [{
