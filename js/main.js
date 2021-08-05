@@ -73,7 +73,7 @@ const createHeader = ({ title, header: { logo, menu, social } }) => {
 
     container.append(wrapper);
     header.append(container);
-    
+
 
     return header;
 };
@@ -207,6 +207,45 @@ const createMain = ({ title, main: { genre, rating, description, trailer, slider
 
 };
 
+const createFooter = ({ footer: { link, copyright } }) => {
+
+    const footer = getElement('footer', ['footer'])
+    const container = getElement('div', ['container'])
+    footer.append(container)
+    const footerСontent = getElement('div', ['footer-menu'])
+    container.append(footerСontent)
+
+    if (copyright) {
+        const copyrightFooter = getElement('div', ['left'])
+        footerСontent.append(copyrightFooter)
+        const spanCopyright = getElement('span', ['copyright'], {
+            textContent: copyright,
+        })
+        copyrightFooter.append(spanCopyright)
+    }
+
+
+    if (link) {
+        const menuFooter = getElement('div', ['right'])
+        footerСontent.append(menuFooter)
+        const navFooter = getElement('nav', ['footer-menu'])
+        menuFooter.append(navFooter)
+
+        const allLinkFooter = link.map(item => {
+            const linkFooter = getElement('a', ['footer-link'], {
+                href: item.link,
+                textContent: item.title
+            });
+            return(linkFooter)
+        })
+
+        menuFooter.append(...allLinkFooter)
+    }
+
+    return footer;
+
+}
+
 const movieConstructor = (selector, options) => {
     const app = document.querySelector(selector)
     document.title = options.title;
@@ -215,7 +254,7 @@ const movieConstructor = (selector, options) => {
     app.style.color = options.fontColor || '';
     app.style.backgroundColor = options.backgroundColor || '';
 
-    if(options.subColor) {
+    if (options.subColor) {
         document.documentElement.style.setProperty('--sub-color', options.subColor)
     }
 
@@ -233,7 +272,7 @@ const movieConstructor = (selector, options) => {
     }
 
 
-;
+    ;
     app.classList.add('body-app');
     app.style.backgroundImage = options.background ?
         `url("${options.background}")` : "";
@@ -244,6 +283,10 @@ const movieConstructor = (selector, options) => {
 
     if (options.main) {
         app.append(createMain(options))
+    };
+
+    if (options.footer) {
+        app.append(createFooter(options))
     }
 };
 
@@ -313,6 +356,23 @@ movieConstructor(".app", {
                 img: 'witcher/series/series-4.jpg',
                 title: 'Банкеты, ублюдки и похороны',
                 subtitle: 'Серия №4'
+            }
+        ]
+    },
+    footer: {
+        copyright: '© 2020 The Witcher. All right reserved.',
+        link: [
+            {
+                title: 'Privacy Policy',
+                link: '#',
+            },
+            {
+                title: 'Terms of Service',
+                link: '#',
+            },
+            {
+                title: 'Legal',
+                link: '#',
             }
         ]
     }
